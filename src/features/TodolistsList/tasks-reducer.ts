@@ -4,7 +4,7 @@ import {Dispatch} from 'redux'
 import {AppRootStateType} from '../../app/store'
 import {setAppStatusAC} from '../../app/app-reducer'
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 const initialState: TasksStateType = {}
 
@@ -52,9 +52,16 @@ export const tasksReducer = slice.reducer
 
 // actions
 export const {removeTaskAC, addTaskAC, updateTaskAC, setTasksAC} = slice.actions
-
+export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks',(todolistId: string , thunkAPI)=>{
+    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
+    todolistsAPI.getTasks(todolistId)
+        .then((res) => {
+            const tasks = res.data.items
+            thunkAPI.dispatch(setTasksAC({tasks, todolistId}))
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+})})
 // thunks
-export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+/*export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
     todolistsAPI.getTasks(todolistId)
         .then((res) => {
@@ -62,7 +69,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
             dispatch(setTasksAC({tasks, todolistId}))
             dispatch(setAppStatusAC({status: 'succeeded'}))
         })
-}
+}*/
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch) => {
     todolistsAPI.deleteTask(todolistId, taskId)
         .then(res => {
@@ -110,6 +117,7 @@ export const updateTaskTC = (taskId: string, model: UpdateDomainTaskModelType, t
         todolistsAPI.updateTask(todolistId, taskId, apiModel)
             .then(res => {
                 if (res.data.resultCode === 0) {
+                    console.log(res)
                     const action = updateTaskAC({taskId, model, todolistId})
                     dispatch(action)
                 } else {
