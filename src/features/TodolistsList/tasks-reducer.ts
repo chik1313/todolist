@@ -117,7 +117,7 @@ export const updateTaskTC = (taskId: string, model: UpdateDomainTaskModelType, t
         todolistsAPI.updateTask(todolistId, taskId, apiModel)
             .then(res => {
                 if (res.data.resultCode === 0) {
-                    console.log(res)
+
                     const action = updateTaskAC({taskId, model, todolistId})
                     dispatch(action)
                 } else {
