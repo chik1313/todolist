@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
+import {setAppStatusAC} from '../../app/app-reducer'
 import {authAPI, LoginParamsType} from '../../api/todolists-api'
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
@@ -26,6 +26,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
     authAPI.login(data)
         .then(res => {
+
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({value: data.rememberMe}))
                 dispatch(setAppStatusAC({status: 'succeeded'}))

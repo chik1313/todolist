@@ -18,6 +18,7 @@ export const Login = () => {
                     email: 'Email is required'
                 }
             }
+
             if (!values.password) {
                 return {
                     password: 'Password is required'
