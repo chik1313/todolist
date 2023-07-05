@@ -28,7 +28,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
-
+                console.log(res)
                 const task = res.data.data.item
                 const action = addTaskAC(task)
                 dispatch(action)
