@@ -27,7 +27,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
     dispatch(setAppStatusAC({status: 'loading'}))
     todolistsAPI.createTask(todolistId, title)
         .then(res => {
-
+            console.log(res)
             if (res.data.resultCode === 0) {
 
                 const task = res.data.data.item
