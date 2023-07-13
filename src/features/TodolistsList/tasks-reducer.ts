@@ -20,7 +20,7 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks',(todolistId: str
 export const removeTaskTC = createAsyncThunk('tasks/removeTask',(param:{taskId: string, todolistId: string},thunkAPI) => {
     return todolistsAPI.deleteTask(param.todolistId, param.taskId)
          .then(res => {return ({taskId:param.taskId, todolistId:param.todolistId})
-
+             console.log(res)
          })
 })
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch) => {
