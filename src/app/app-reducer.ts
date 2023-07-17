@@ -41,6 +41,7 @@ export const {setAppErrorAC, setAppStatusAC, setAppInitializedAC} = slice.action
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
+        console.log(res)
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC({value: true}))
         } else {
