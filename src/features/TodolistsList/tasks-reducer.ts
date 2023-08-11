@@ -28,7 +28,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
         .then(res => {
             console.log(res)
             if (res.data.resultCode === 0) {
-                console.log(res)
+
                 const task = res.data.data.item
                 const action = addTaskAC(task)
                 dispatch(action)
